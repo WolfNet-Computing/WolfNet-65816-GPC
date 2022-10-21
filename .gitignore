@@ -25,5 +25,8 @@ fp-info-cache
 *.xml
 *.csv
 
+# Backups
+*.zip
+
 # User defined ignores
 Reference/
