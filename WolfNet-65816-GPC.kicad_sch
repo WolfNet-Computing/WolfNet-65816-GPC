@@ -4998,7 +4998,7 @@
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
   )
-  (global_label "~{RESET}" (shape input) (at 378.46 39.37 0) (fields_autoplaced)
+  (global_label "RESET" (shape input) (at 378.46 39.37 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid eae8578b-1fae-430f-b4ce-0d934f9565ab)
     (property "Intersheet References" "${INTERSHEET_REFS}" (id 0) (at 386.6183 39.2906 0)
