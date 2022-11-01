@@ -1,0 +1,95 @@
+Name     Address Decoder and DMAC ;
+PartNo   U10 ;
+Date     01/11/2022 ;
+Revision 01 ;
+Designer John Wolfe ;
+Company  WolfNet Computing ;
+Assembly WolfNet-65816-GPC Motherboard ;
+Location Glasgow, UK ;
+Device   f1504ispplcc84 ;
+
+/* *************** INPUT PINS *********************/
+PIN 83 = GCLK                    ; /*                                 */ 
+PIN 12 = A0                      ; /*                                 */ 
+PIN 15 = A1                      ; /*                                 */ 
+PIN 16 = A2                      ; /*                                 */ 
+PIN 17 = A3                      ; /*                                 */ 
+PIN 18 = A4                      ; /*                                 */ 
+PIN 20 = A5                      ; /*                                 */ 
+PIN 21 = A6                      ; /*                                 */ 
+PIN 22 = A7                      ; /*                                 */ 
+PIN 24 = A8                      ; /*                                 */ 
+PIN 25 = A9                      ; /*                                 */ 
+PIN 27 = A10                     ; /*                                 */ 
+PIN 28 = A11                     ; /*                                 */ 
+PIN 29 = A12                     ; /*                                 */ 
+PIN 30 = A13                     ; /*                                 */ 
+PIN 31 = A14                     ; /*                                 */ 
+PIN 33 = A15                     ; /*                                 */ 
+PIN 34 = A16                     ; /*                                 */ 
+PIN 35 = A17                     ; /*                                 */ 
+PIN 36 = A18                     ; /*                                 */ 
+PIN 37 = A19                     ; /*                                 */ 
+PIN 39 = A20                     ; /*                                 */ 
+PIN 40 = A21                     ; /*                                 */ 
+PIN 41 = A22                     ; /*                                 */ 
+PIN 44 = A23                     ; /*                                 */ 
+PIN 46 = ValidDataAddress        ; /*                                 */ 
+PIN 45 = ValidProgramAddress     ; /*                                 */ 
+PIN 48 = Emulation               ; /*                                 */ 
+PIN 54 = IRQ_IN                  ; /*                                 */ 
+PIN 55 = !UART_IRQ               ; /*                                 */ 
+PIN 56 = !65SIB_IRQ              ; /*                                 */ 
+PIN 60 = IO_RDY                  ; /*                                 */ 
+PIN 65 = !DRQ0                   ; /*                                 */ 
+PIN 64 = !DRQ1                   ; /*                                 */ 
+PIN 63 = !DRQ2                   ; /*                                 */ 
+PIN 61 = !DRQ3                   ; /*                                 */ 
+PIN 81 = HALT_IN                 ; /*                                 */ 
+PIN 1  = IO_CHK0                 ; /*                                 */
+PIN 84 = IO_CHK1                 ; /*                                 */
+PIN 2  = R/W                     ; /*                                 */
+
+/* *************** OUTPUT PINS ********************/
+PIN 49 = NOT_PHI2                ; /*                                 */ 
+PIN 50 = RESET                   ; /*                                 */ 
+PIN 51 = !IOR                    ; /*                                 */ 
+PIN 52 = !IOW                    ; /*                                 */ 
+PIN 58 = !FLASH1_EN              ; /*                                 */ 
+PIN 57 = !FLASH2_EN              ; /*                                 */ 
+PIN 70 = !DACK0                  ; /*                                 */ 
+PIN 69 = !DACK1                  ; /*                                 */ 
+PIN 68 = !DACK2                  ; /*                                 */ 
+PIN 67 = !DACK3                  ; /*                                 */ 
+PIN 73 = LATCH_EN                ; /*                                 */ 
+PIN 74 = T/C                     ; /*                                 */ 
+PIN 75 = !IRQ                    ; /*                                 */ 
+PIN 76 = !READ                   ; /*                                 */ 
+PIN 77 = !WRITE                  ; /*                                 */ 
+PIN 79 = !SMEMR                  ; /*                                 */ 
+PIN 80 = !SMEMW                  ; /*                                 */ 
+PIN 4  = !HALT                   ; /*                                 */ 
+PIN 6  = 65SIB_CS1               ; /*                                 */ 
+PIN 5  = !65SIB_CS2              ; /*                                 */ 
+PIN 8  = !UART_EN                ; /*                                 */ 
+PIN 10 = RAM_EN2                 ; /*                                 */ 
+PIN 11 = !RAM_EN                 ; /*                                 */ 
+
+/* Declarations and Intermediate Variable Definitions */
+FIELD ADDRESS = [A23..A4];
+
+NODE ValidAddress = (ValidDataAddress # ValidProgramAddress);
+
+NODE E_RAM = ADDRESS:['h'000000..007FFF];
+NODE E_FLASH = ADDRESS:['h'00E000..00FFFF];
+
+/* Logic Equations */
+WRITE = (CLK & !RW);
+READ = (CLK & RW);
+
+HALT = HALT_IN;
+IRQ = IRQ_IN;
+
+RAM_EN2 = (E_RAM & Emulation & ValidAddress) # (RAM & !Emulation & ValidAddress);
+RAM_EN1 = RAM_EN2;
+
