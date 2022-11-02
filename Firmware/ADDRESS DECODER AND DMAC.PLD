@@ -37,7 +37,6 @@ PIN 44 = A23                     ; /*                                 */
 PIN 46 = ValidDataAddress        ; /*                                 */ 
 PIN 45 = ValidProgramAddress     ; /*                                 */ 
 PIN 48 = Emulation               ; /*                                 */ 
-PIN 54 = IRQ_IN                  ; /*                                 */ 
 PIN 55 = !UART_IRQ               ; /*                                 */ 
 PIN 56 = !65SIB_IRQ              ; /*                                 */ 
 PIN 60 = IO_RDY                  ; /*                                 */ 
@@ -48,7 +47,7 @@ PIN 61 = !DRQ3                   ; /*                                 */
 PIN 81 = HALT_IN                 ; /*                                 */ 
 PIN 1  = IO_CHK0                 ; /*                                 */
 PIN 84 = IO_CHK1                 ; /*                                 */
-PIN 2  = R/W                     ; /*                                 */
+PIN 2  = RW                      ; /*                                 */
 PIN 9  = !RESET_IN               ; /*                                 */
 
 /* *************** OUTPUT PINS ********************/
@@ -56,14 +55,14 @@ PIN 49 = NOT_PHI2                ; /*                                 */
 PIN 50 = RESET                   ; /*                                 */ 
 PIN 51 = !IOR                    ; /*                                 */ 
 PIN 52 = !IOW                    ; /*                                 */ 
-PIN 58 = !FLASH1_EN              ; /*                                 */ 
-PIN 57 = !FLASH2_EN              ; /*                                 */ 
+PIN 58 = !FLASH0_EN              ; /*                                 */ 
+PIN 57 = !FLASH1_EN              ; /*                                 */ 
 PIN 70 = !DACK0                  ; /*                                 */ 
 PIN 69 = !DACK1                  ; /*                                 */ 
 PIN 68 = !DACK2                  ; /*                                 */ 
 PIN 67 = !DACK3                  ; /*                                 */ 
 PIN 73 = LATCH_EN                ; /*                                 */ 
-PIN 74 = T/C                     ; /*                                 */ 
+PIN 74 = TC                      ; /*                                 */ 
 PIN 75 = !IRQ                    ; /*                                 */ 
 PIN 76 = !READ                   ; /*                                 */ 
 PIN 77 = !WRITE                  ; /*                                 */ 
@@ -71,33 +70,43 @@ PIN 79 = !SMEMR                  ; /*                                 */
 PIN 80 = !SMEMW                  ; /*                                 */ 
 PIN 4  = !HALT                   ; /*                                 */ 
 PIN 6  = 65SIB_CS1               ; /*                                 */ 
-PIN 5  = !65SIB_CS2              ; /*                                 */ 
+PIN 5  = !FLASH2_EN              ; /*                                 */ 
 PIN 8  = !UART_EN                ; /*                                 */ 
-PIN 10 = RAM_EN2                 ; /*                                 */ 
-PIN 11 = !RAM_EN                 ; /*                                 */ 
+PIN 10 = !FLASH3_EN              ; /*                                 */ 
+PIN 11 = !RAM0_EN                ; /*                                 */ 
+PIN 54 = !RAM1_EN                ; /*                                 */
 
 /* Declarations and Intermediate Variable Definitions */
 FIELD ADDRESS = [A23..A4];
 
 NODE ValidAddress = (ValidDataAddress # ValidProgramAddress);
 
-NODE UART = ADDRESS:['h'800000..80000F];
+/* Variables prefixed with 'IO_' are placed in I/O space and may be used in either mode. */
+NODE IO_UART = ADDRESS:['h'800000..80000F];
 
-NODE E_RAM = ADDRESS:['h'000000..007FFF];
-NODE E_FLASH = ADDRESS:['h'00E000..00FFFF];
+/* Variables prefixed with 'E_' are for emulation mode only. */
+NODE E_RAM0 = ADDRESS:['h'000000..007FFF];
+NODE E_FLASH0 = ADDRESS:['h'00E000..00FFFF];
 
-NODE RAM = ADDRESS:['h'000000..400000];
+/* Variables prefixed with 'N_' are for native mode only. */
+NODE N_RAM0 = ADDRESS:['h'000000..400000];
+NODE N_RAM1 = ADDRESS:['h'400000..800000];
 
 /* Logic Equations */
 WRITE = (CLK & !RW);
 READ = (CLK & RW);
 
 NOT_PHI2 = !CLK;
-HALT = HALT_IN;
-IRQ = IRQ_IN;
-RESET = RESET_IN;
 
-UART_EN = (UART & !Emulation & ValidAddress);
-RAM_EN2 = (E_RAM & Emulation & ValidAddress) # (RAM & !Emulation & ValidAddress);
-RAM_EN1 = RAM_EN2;
+/* I/O devices.*/
+UART_EN = (IO_UART & !Emulation & ValidAddress);
 
+/* RAM devices. */
+RAM0_EN = (E_RAM0 & Emulation & ValidAddress) # (N_RAM0 & !Emulation & ValidAddress);
+RAM1_EN = (N_RAM1 & !Emulation & ValidAddress);
+
+/* Flash devices. */
+FLASH0_EN = (E_FLASH0 & Emulation & ValidAddress) # (N_FLASH0 & !Emulation & ValidAddress);
+FLASH1_EN = (E_FLASH1 & Emulation & ValidAddress) # (N_FLASH1 & !Emulation & ValidAddress);
+FLASH2_EN = (E_FLASH2 & Emulation & ValidAddress) # (N_FLASH2 & !Emulation & ValidAddress);
+FLASH3_EN = (E_FLASH3 & Emulation & ValidAddress) # (N_FLASH3 & !Emulation & ValidAddress);
