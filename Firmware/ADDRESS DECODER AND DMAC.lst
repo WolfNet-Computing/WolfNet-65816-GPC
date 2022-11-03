@@ -3,7 +3,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: ADDRESS DECODER AND DMAC.pld     Page 1
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Tue Nov 01 19:06:50 2022
+Created Wed Nov 02 18:51:56 2022
 
   1:Name     Address Decoder and DMAC ;
   2:PartNo   U10 ;
@@ -16,7 +16,7 @@ Created Tue Nov 01 19:06:50 2022
   9:Device   f1504ispplcc84 ;
  10:
  11:/* *************** INPUT PINS *********************/
- 12:PIN 83 = GCLK                    ; /*                                 */ 
+ 12:PIN 83 = CLK                     ; /*                                 */ 
  13:PIN 12 = A0                      ; /*                                 */ 
  14:PIN 15 = A1                      ; /*                                 */ 
  15:PIN 16 = A2                      ; /*                                 */ 
@@ -44,44 +44,40 @@ Created Tue Nov 01 19:06:50 2022
  37:PIN 46 = ValidDataAddress        ; /*                                 */ 
  38:PIN 45 = ValidProgramAddress     ; /*                                 */ 
  39:PIN 48 = Emulation               ; /*                                 */ 
- 40:PIN 54 = IRQ_IN                  ; /*                                 */ 
- 41:PIN 55 = !UART_IRQ               ; /*                                 */ 
- 42:PIN 56 = !65SIB_IRQ              ; /*                                 */ 
- 43:PIN 60 = IO_RDY                  ; /*                                 */ 
- 44:PIN 65 = !DRQ0                   ; /*                                 */ 
- 45:PIN 64 = !DRQ1                   ; /*                                 */ 
- 46:PIN 63 = !DRQ2                   ; /*                                 */ 
- 47:PIN 61 = !DRQ3                   ; /*                                 */ 
- 48:PIN 81 = HALT_IN                 ; /*                                 */ 
- 49:PIN 1  = IO_CHK0                 ; /*                                 */
- 50:PIN 84 = IO_CHK1                 ; /*                                 */
- 51:PIN 2  = R/W                     ; /*                                 */
-              ^
-[0009ca] missing symbol:  ;
+ 40:PIN 55 = !UART_IRQ               ; /*                                 */ 
+ 41:PIN 56 = !65SIB_IRQ              ; /*                                 */ 
+ 42:PIN 60 = IO_RDY                  ; /*                                 */ 
+ 43:PIN 65 = !DRQ0                   ; /*                                 */ 
+ 44:PIN 64 = !DRQ1                   ; /*                                 */ 
+ 45:PIN 63 = !DRQ2                   ; /*                                 */ 
+ 46:PIN 61 = !DRQ3                   ; /*                                 */ 
+ 47:PIN 81 = HALT_IN                 ; /*                                 */ 
+ 48:PIN 1  = IO_CHK0                 ; /*                                 */
+ 49:PIN 84 = IO_CHK1                 ; /*                                 */
+ 50:PIN 2  = RW                      ; /*                                 */
+ 51:PIN 9  = !RESET_IN               ; /*                                 */
+ 52:
+ 53:/* *************** OUTPUT PINS ********************/
 
 LISTING FOR LOGIC DESCRIPTION FILE: ADDRESS DECODER AND DMAC.pld     Page 2
 
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Tue Nov 01 19:06:50 2022
+Created Wed Nov 02 18:51:56 2022
 
- 52:
- 53:/* *************** OUTPUT PINS ********************/
  54:PIN 49 = NOT_PHI2                ; /*                                 */ 
  55:PIN 50 = RESET                   ; /*                                 */ 
  56:PIN 51 = !IOR                    ; /*                                 */ 
  57:PIN 52 = !IOW                    ; /*                                 */ 
- 58:PIN 58 = !FLASH1_EN              ; /*                                 */ 
- 59:PIN 57 = !FLASH2_EN              ; /*                                 */ 
+ 58:PIN 58 = !FLASH0_EN              ; /*                                 */ 
+ 59:PIN 57 = !FLASH1_EN              ; /*                                 */ 
  60:PIN 70 = !DACK0                  ; /*                                 */ 
  61:PIN 69 = !DACK1                  ; /*                                 */ 
  62:PIN 68 = !DACK2                  ; /*                                 */ 
  63:PIN 67 = !DACK3                  ; /*                                 */ 
  64:PIN 73 = LATCH_EN                ; /*                                 */ 
- 65:PIN 74 = T/C                     ; /*                                 */ 
-              ^
-[0009ca] missing symbol:  ;
+ 65:PIN 74 = TC                      ; /*                                 */ 
  66:PIN 75 = !IRQ                    ; /*                                 */ 
  67:PIN 76 = !READ                   ; /*                                 */ 
  68:PIN 77 = !WRITE                  ; /*                                 */ 
@@ -89,34 +85,61 @@ Created Tue Nov 01 19:06:50 2022
  70:PIN 80 = !SMEMW                  ; /*                                 */ 
  71:PIN 4  = !HALT                   ; /*                                 */ 
  72:PIN 6  = 65SIB_CS1               ; /*                                 */ 
- 73:PIN 5  = !65SIB_CS2              ; /*                                 */ 
+ 73:PIN 5  = !FLASH2_EN              ; /*                                 */ 
  74:PIN 8  = !UART_EN                ; /*                                 */ 
- 75:PIN 10 = RAM_EN2                 ; /*                                 */ 
- 76:PIN 11 = !RAM_EN                 ; /*                                 */ 
- 77:
- 78:/* Declarations and Intermediate Variable Definitions */
- 79:FIELD ADDRESS = [A23..A4];
- 80:
- 81:NODE ValidAddress = (ValidDataAddress # ValidProgramAddress);
-                      ^
-[0009ca] missing symbol:  ;
- 82:
- 83:NODE E_RAM = ADDRESS:['h'000000..007FFF];
-               ^
-[0009ca] missing symbol:  ;
- 84:NODE E_FLASH = ADDRESS:['h'00E000..00FFFF];
-                 ^
-[0009ca] missing symbol:  ;
- 85:
- 86:/* Logic Equations */
- 87:WRITE = (CLK & !RW);
- 88:READ = (CLK & RW);
+ 75:PIN 10 = !FLASH3_EN              ; /*                                 */ 
+ 76:PIN 11 = !RAM0_EN                ; /*                                 */ 
+ 77:PIN 54 = !RAM1_EN                ; /*                                 */
+ 78:
+ 79:/* Nodes */
+ 80:NODE ValidAddress;
+ 81:NODE IO_UART;
+ 82:NODE E_RAM0;
+ 83:NODE E_FLASH0;
+ 84:NODE N_RAM0;
+ 85:NODE N_RAM1;
+ 86:
+ 87:/* Declarations and Intermediate Variable Definitions */
+ 88:FIELD ADDRESS = [A23..A4];
  89:
- 90:HALT = HALT_IN;
- 91:IRQ = IRQ_IN;
- 92:
- 93:RAM_EN2 = (E_RAM & Emulation & ValidAddress) # (RAM & !Emulation & ValidAddress);
- 94:RAM_EN1 = RAM_EN2;
- 95:
- 96:
- 97:
+ 90:ValidAddress = (ValidDataAddress # ValidProgramAddress);
+ 91:
+ 92:/* Variables prefixed with 'IO_' are placed in I/O space and may be used in either mode. */
+ 93:IO_UART = ADDRESS:['h'800000..80000F];
+ 94:
+ 95:/* Variables prefixed with 'E_' are for emulation mode only. */
+ 96:E_RAM0 = ADDRESS:['h'000000..007FFF];
+ 97:E_FLASH0 = ADDRESS:['h'00E000..00FFFF];
+ 98:
+ 99:/* Variables prefixed with 'N_' are for native mode only. */
+100:N_RAM0 = ADDRESS:['h'000000..400000];
+101:N_RAM1 = ADDRESS:['h'400000..800000];
+102:
+103:/* Logic Equations */
+104:WRITE = (CLK & !RW);
+105:READ = (CLK & RW);
+106:
+107:NOT_PHI2 = !CLK;
+
+LISTING FOR LOGIC DESCRIPTION FILE: ADDRESS DECODER AND DMAC.pld     Page 3
+
+CUPL(WM): Universal Compiler for Programmable Logic
+Version 5.0a Serial# 60008009
+Copyright (c) 1983, 1998 Logical Devices, Inc.
+Created Wed Nov 02 18:51:56 2022
+
+108:
+109:/* I/O devices.*/
+110:UART_EN = (IO_UART & !Emulation & ValidAddress);
+111:
+112:/* RAM devices. */
+113:RAM0_EN = (E_RAM0 & Emulation & ValidAddress) # (N_RAM0 & !Emulation & ValidAddress);
+114:RAM1_EN = (N_RAM1 & !Emulation & ValidAddress);
+115:
+116:/* Flash devices. */
+117:FLASH0_EN = (E_FLASH0 & Emulation & ValidAddress) # (N_FLASH0 & !Emulation & ValidAddress);
+118:FLASH1_EN = (N_FLASH1 & !Emulation & ValidAddress);
+119:FLASH2_EN = (N_FLASH2 & !Emulation & ValidAddress);
+120:FLASH3_EN = (N_FLASH3 & !Emulation & ValidAddress);
+121:
+122:

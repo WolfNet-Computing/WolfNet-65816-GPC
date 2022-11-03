@@ -76,21 +76,33 @@ PIN 10 = !FLASH3_EN              ; /*                                 */
 PIN 11 = !RAM0_EN                ; /*                                 */ 
 PIN 54 = !RAM1_EN                ; /*                                 */
 
+/* Nodes */
+NODE ValidAddress;
+NODE IO_UART;
+NODE E_RAM0;
+NODE E_FLASH0;
+NODE N_RAM0;
+NODE N_RAM1;
+NODE N_FLASH0;
+NODE N_FLASH1;
+NODE N_FLASH2;
+NODE N_FLASH3;
+
 /* Declarations and Intermediate Variable Definitions */
 FIELD ADDRESS = [A23..A4];
 
-NODE ValidAddress = (ValidDataAddress # ValidProgramAddress);
+ValidAddress = (ValidDataAddress # ValidProgramAddress);
 
 /* Variables prefixed with 'IO_' are placed in I/O space and may be used in either mode. */
-NODE IO_UART = ADDRESS:['h'800000..80000F];
+IO_UART = ADDRESS:['h'800000..80000F];
 
 /* Variables prefixed with 'E_' are for emulation mode only. */
-NODE E_RAM0 = ADDRESS:['h'000000..007FFF];
-NODE E_FLASH0 = ADDRESS:['h'00E000..00FFFF];
+E_RAM0 = ADDRESS:['h'000000..007FFF];
+E_FLASH0 = ADDRESS:['h'00E000..00FFFF];
 
 /* Variables prefixed with 'N_' are for native mode only. */
-NODE N_RAM0 = ADDRESS:['h'000000..400000];
-NODE N_RAM1 = ADDRESS:['h'400000..800000];
+N_RAM0 = ADDRESS:['h'000000..400000];
+N_RAM1 = ADDRESS:['h'400000..800000];
 
 /* Logic Equations */
 WRITE = (CLK & !RW);
@@ -107,6 +119,6 @@ RAM1_EN = (N_RAM1 & !Emulation & ValidAddress);
 
 /* Flash devices. */
 FLASH0_EN = (E_FLASH0 & Emulation & ValidAddress) # (N_FLASH0 & !Emulation & ValidAddress);
-FLASH1_EN = (E_FLASH1 & Emulation & ValidAddress) # (N_FLASH1 & !Emulation & ValidAddress);
-FLASH2_EN = (E_FLASH2 & Emulation & ValidAddress) # (N_FLASH2 & !Emulation & ValidAddress);
-FLASH3_EN = (E_FLASH3 & Emulation & ValidAddress) # (N_FLASH3 & !Emulation & ValidAddress);
+FLASH1_EN = (N_FLASH1 & !Emulation & ValidAddress);
+FLASH2_EN = (N_FLASH2 & !Emulation & ValidAddress);
+FLASH3_EN = (N_FLASH3 & !Emulation & ValidAddress);
