@@ -394,7 +394,7 @@
 
   (footprint "Package_SO:TSOP-II-44_10.16x18.41mm_P0.8mm" (layer "F.Cu")
     (tstamp 07f79580-7b21-4262-9545-d4231a170876)
-    (at 178.181 214.9602)
+    (at 170.2313 215.563)
     (descr "TSOP-II, 44 Pin (http://www.issi.com/WW/pdf/61-64C5128AL.pdf), generated with kicad-footprint-generator ipc_gullwing_generator.py")
     (tags "TSOP-II SO")
     (property "Sheetfile" "Motherboard.kicad_sch")
@@ -6508,7 +6508,7 @@
     (property "Sheetname" "")
     (property "ki_description" "Hex Inverter")
     (property "ki_keywords" "HCTMOS not inv")
-    (path "/5d901936-b117-498c-afdd-106bff766bea")
+    (path "/972f8cc1-a982-48e8-bb9e-7bee035c7b3d")
     (attr through_hole)
     (fp_text reference "U2" (at 3.81 -2.33) (layer "F.SilkS")
         (effects (font (size 1 1) (thickness 0.15)))
