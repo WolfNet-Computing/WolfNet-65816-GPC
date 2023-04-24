@@ -9,7 +9,7 @@ Features:
  - ATF1508AS Based Reprogrammable Address Decoder
  - ATX 20-Pin Power Connector
  - 65-SIB Serial Interface Bus
- - 40-Pin IDE Connector for ATA-2 HDDs
+ - 40-Pin IDE Connector for PATA HDDs
  - 16 MiB Flash ROM
  - 16 MiB SRAM
  - Built-in JTAG-ISP Headers for all ATF15XXAS parts used
