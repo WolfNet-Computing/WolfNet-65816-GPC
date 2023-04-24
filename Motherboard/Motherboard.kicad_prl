@@ -74,8 +74,8 @@
   "project": {
     "files": [
       {
-        "name": "Motherboard.kicad_pcb",
-        "open": false,
+        "name": "Motherboard.kicad_sch",
+        "open": true,
         "window": {
           "display": 0,
           "maximized": true,
@@ -86,7 +86,7 @@
         }
       },
       {
-        "name": "Motherboard.kicad_sch",
+        "name": "Motherboard.kicad_pcb",
         "open": true,
         "window": {
           "display": 0,
