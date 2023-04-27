@@ -14740,7 +14740,7 @@
     (property "Reference" "D7" (at 495.6175 328.93 0)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Value" "LED" (at 495.6175 331.47 0)
+    (property "Value" "HDD_ACT" (at 495.6175 331.47 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Footprint" "LED_THT:LED_D5.0mm" (at 494.03 335.28 0)
