@@ -14864,7 +14864,7 @@
     (property "Value" "GAL16V8" (at 233.0959 234.95 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "" (at 231.14 250.19 0)
+    (property "Footprint" "Package_DIP:DIP-20_W7.62mm_Socket_LongPads" (at 231.14 250.19 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "" (at 231.14 250.19 0)
